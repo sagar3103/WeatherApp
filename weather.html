@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+    <div class="container">
+        <div class="app-title">
+            <header>Weather Details</header>
+        </div>
+        <div class="weather-container">
+            <div class="weather-icon">
+                <img id="weather-icon" src="icons/unknown.png" />
+            </div>
+            <div class="temprature-value">
+                <p id="temperature">*<span>°C</span></p>
+            </div>
+            <div class="temprature-description">
+                <p id="description"></p>
+            </div>
+            <div class="location">
+                <p id="location"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const weatherData = JSON.parse(localStorage.getItem('weatherData'));
+            if (weatherData) {
+                document.getElementById('weather-icon').src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`;
+                document.getElementById('temperature').innerHTML = `${Math.round(weatherData.main.temp)}<span>°C</span>`;
+                document.getElementById('description').textContent = weatherData.weather[0].description;
+                document.getElementById('location').textContent = `${weatherData.name}, ${weatherData.sys.country}`;
+            } else {
+                alert('No weather data found. Please go back and enter a city.');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>
